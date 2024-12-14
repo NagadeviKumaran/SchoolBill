@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="12/11/2024 15:47:52" ReportInfo.Modified="12/14/2024 12:31:17" ReportInfo.CreatorVersion="2024.2.0.0">
+  <Dictionary>
+    <PostgresDataConnection Name="Connection" ConnectionString="rijcmlq8ZkN6qUj4G/zvKvLeJ9DDB6WCp22J48oQEWWvz8/J/PANlGGiHiXu9i92Kg/RU9FT4V1aCmNBLyfzrF9l894PqHJL9mEmty7NYIbyHdSLSA=">
+      <TableDataSource Name="public_Schools" DataType="System.Int32" Enabled="true" TableName="public.&quot;Schools&quot;">
+        <Column Name="SchoolId" DataType="System.Int32"/>
+        <Column Name="SchoolName" DataType="System.String"/>
+        <Column Name="SchoolAddress" DataType="System.String"/>
+        <Column Name="SchoolEmail" DataType="System.String"/>
+        <Column Name="Phoneno" DataType="System.String"/>
+        <Column Name="Billid" DataType="System.Int32"/>
+      </TableDataSource>
+      <TableDataSource Name="public_BillMasters" DataType="System.Int32" Enabled="true" TableName="public.&quot;BillMasters&quot;">
+        <Column Name="Billid" DataType="System.Int32"/>
+        <Column Name="Studentid" DataType="System.Int32"/>
+        <Column Name="BillDate" DataType="System.DateTime"/>
+      </TableDataSource>
+      <TableDataSource Name="public_BillDetails" DataType="System.Int32" Enabled="true" TableName="public.&quot;BillDetails&quot;">
+        <Column Name="Detailid" DataType="System.Int32"/>
+        <Column Name="Billid" DataType="System.Int32"/>
+        <Column Name="AppNo" DataType="System.Int32"/>
+        <Column Name="Particulars" DataType="System.String"/>
+        <Column Name="Amount" DataType="System.Decimal"/>
+      </TableDataSource>
+      <TableDataSource Name="public_Students" DataType="System.Int32" Enabled="true" TableName="public.&quot;Students&quot;">
+        <Column Name="Studentid" DataType="System.Int32"/>
+        <Column Name="Studentname" DataType="System.String"/>
+        <Column Name="Classid" DataType="System.Int32"/>
+        <Column Name="Sectionid" DataType="System.Int32"/>
+        <Column Name="ParentName" DataType="System.String"/>
+        <Column Name="StuContactno" DataType="System.String"/>
+        <Column Name="Billid" DataType="System.Int32"/>
+      </TableDataSource>
+      <TableDataSource Name="public_Classes" DataType="System.Int32" Enabled="true" TableName="public.&quot;Classes&quot;">
+        <Column Name="Classid" DataType="System.Int32"/>
+        <Column Name="ClassName" DataType="System.String"/>
+      </TableDataSource>
+      <TableDataSource Name="public_Sections" DataType="System.Int32" Enabled="true" TableName="public.&quot;Sections&quot;">
+        <Column Name="Sectionid" DataType="System.Int32"/>
+        <Column Name="Sectionname" DataType="System.String"/>
+        <Column Name="Classid" DataType="System.Int32"/>
+        <Column Name="ClassEntityClassid" DataType="System.Int32"/>
+      </TableDataSource>
+    </PostgresDataConnection>
+    <Parameter Name="BillID" DataType="System.Int32" Expression="[public_BillMasters.Billid]"/>
+    <Total Name="Total" Expression="[public_BillDetails.Amount]" Evaluator="Data2"/>
+  </Dictionary>
+  <ReportPage Name="Page1" PaperWidth="90" PaperHeight="140" Watermark.Font="Arial, 60pt">
+    <DataBand Name="Data1" Width="264.6" Height="103.95" DataSource="public_Schools" Filter="[BillID]==[public_Schools.SchoolId]">
+      <TextObject Name="Text1" Left="28.35" Top="9.45" Width="198.45" Height="18.9" Text="[public_Schools.SchoolName]" HorzAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text2" Left="47.25" Top="28.35" Width="160.65" Height="47.25" Text="[public_Schools.SchoolAddress]&#13;&#10;" HorzAlign="Center" Font="Arial, 10pt"/>
+      <TextObject Name="Text15" Left="47.25" Top="75.6" Width="160.65" Height="18.9" Text="[public_Schools.SchoolEmail]" HorzAlign="Center" Font="Arial, 10pt"/>
+      <DataBand Name="Data2" Top="106.08" Width="264.6" Height="37.8" DataSource="public_BillDetails" Filter="[BillID]==[public_BillDetails.Detailid]">
+        <TextObject Name="Text9" Width="132.3" Height="18.9" Text="No:[public_BillDetails.Billid]" Font="Arial, 10pt"/>
+        <TextObject Name="Text10" Left="132.3" Width="160.65" Height="18.9" Text="Date:[public_BillMasters.BillDate]" Format="Date" Format.Format="d" Font="Arial, 10pt"/>
+        <TextObject Name="Text3" Top="18.9" Width="160.65" Height="18.9" Text="Appln./No:[public_BillDetails.AppNo]" Font="Arial, 10pt"/>
+      </DataBand>
+      <DataBand Name="Data3" Top="146.02" Width="264.6" Height="37.8" DataSource="public_Students" Filter="[BillID]==[public_Students.Studentid]">
+        <TextObject Name="Text4" Width="132.3" Height="18.9" Text="Stu.Name:[public_Students.Studentname]" Font="Arial, 10pt"/>
+        <TextObject Name="Text12" Top="18.9" Width="132.3" Height="18.9" Text="Par.Name:[public_Students.ParentName]" Font="Arial, 10pt"/>
+        <TextObject Name="Text13" Left="132.3" Top="18.9" Width="132.3" Height="18.9" Text="Mob.No:[public_Students.StuContactno]" Font="Arial, 10pt"/>
+      </DataBand>
+      <DataBand Name="Data4" Top="185.95" Width="264.6" Height="18.9" Guides="0" DataSource="public_Classes" Filter="[public_Classes.Classid]==[public_Students.Billid]">
+        <TextObject Name="Text7" Width="132.3" Height="18.9" Text="Class:[public_Classes.ClassName]" Font="Arial, 10pt"/>
+      </DataBand>
+      <DataBand Name="Data5" Top="206.98" Width="264.6" Height="85.05" DataSource="public_BillDetails" Filter="[public_BillDetails.Detailid]==[BillID]">
+        <TableObject Name="Table1" Left="9.45" Top="9.45" Width="245.7" Height="75.6">
+          <TableColumn Name="Column1"/>
+          <TableColumn Name="Column2" Width="85.05"/>
+          <TableColumn Name="Column3" Width="94.5"/>
+          <TableRow Name="Row1">
+            <TableCell Name="Cell1" Border.Lines="Top, Bottom" Border.Style="Dash" Text="S.No" Font="Arial, 10pt"/>
+            <TableCell Name="Cell2" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Particulars" Font="Arial, 10pt"/>
+            <TableCell Name="Cell3" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Amount(Rs)" Font="Arial, 10pt"/>
+          </TableRow>
+          <TableRow Name="Row2">
+            <TableCell Name="Cell6" Text="[public_BillDetails.Detailid]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell7" Text="[public_BillDetails.Particulars]" Font="Arial, 10pt"/>
+            <TableCell Name="Cell8" Text="[public_BillDetails.Amount]" Font="Arial, 10pt"/>
+          </TableRow>
+          <TableRow Name="Row3">
+            <TableCell Name="Cell11" Font="Arial, 10pt"/>
+            <TableCell Name="Cell12" Font="Arial, 10pt"/>
+            <TableCell Name="Cell13" Font="Arial, 10pt"/>
+          </TableRow>
+          <TableRow Name="Row4">
+            <TableCell Name="Cell16" Font="Arial, 10pt"/>
+            <TableCell Name="Cell17" Font="Arial, 10pt"/>
+            <TableCell Name="Cell18" Font="Arial, 10pt"/>
+          </TableRow>
+        </TableObject>
+        <DataFooterBand Name="DataFooter1" Top="294.17" Width="264.6" Height="18.9">
+          <TableObject Name="Table2" Left="9.45" Width="236.25" Height="18.9">
+            <TableColumn Name="Column4" Width="78.75"/>
+            <TableColumn Name="Column5" Width="69.3"/>
+            <TableColumn Name="Column6" Width="88.2"/>
+            <TableRow Name="Row6">
+              <TableCell Name="Cell24" Border.Lines="Top, Bottom" Border.Style="Dash" Font="Arial, 10pt"/>
+              <TableCell Name="Cell25" Border.Lines="Top, Bottom" Border.Style="Dash" Font="Arial, 10pt"/>
+              <TableCell Name="Cell26" Border.Lines="Top, Bottom" Border.Style="Dash" Text="Total:[Total]" Font="Arial, 10pt"/>
+            </TableRow>
+          </TableObject>
+        </DataFooterBand>
+      </DataBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="315.2" Width="264.6" Height="75.6">
+      <TextObject Name="Text14" Top="9.45" Width="226.8" Height="56.7" Text="**TEMPORARY RECEIPT ONLY&#13;&#10;  Visit us @ www.svgroup.org&#13;&#10;   https://facebook.com/svgroup&#13;&#10;&#13;&#10;" HorzAlign="Center" Font="Arial, 10pt"/>
+    </PageFooterBand>
+  </ReportPage>
+</Report>
